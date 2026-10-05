@@ -1,7 +1,5 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const express = require('express');
-const app = express();
 
 const client = new Client({
     authStrategy: new LocalAuth(),
@@ -10,23 +8,21 @@ const client = new Client({
 
 client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
-    console.log(qr);
+    console.log('سكاني QR بواتساب');
 });
 
 client.on('ready', () => {
-    console.log('S-ACADEMY BOT خدام!');
+    console.log('✅ البوط خدام!');
 });
 
 client.on('message', async msg => {
     let t = msg.body.toLowerCase();
-    if(t.includes('بغيت') || t.includes('كورس') || t.includes('bghit') || t.includes('49')){
-        await msg.reply(`مرحبا فـ S-ACADEMY 🎓\n\n✅ كورس رقمي كامل\n💰 49 درهم فقط\n📥 كتاخدو فوري\n\n1- خلص Wafacash: 06xxxx\n2- صيفط الروسي هنا\n3- الروبو يصيفط لك الرابط أوتوماتيك 🤖`);
+    if(t.includes('سلام') || t.includes('بغيت') || t.includes('كورس')){
+        await msg.reply('مرحبا فـ S-ACADEMY 🚀\nكورس ب 49 درهم\nكتب "خلص" باش نعطيك الرابط');
     }
-    else if(msg.hasMedia){
-        await msg.reply(`توصلت بالروسي ✅\n\nهاهو رابط الكورس:\nhttps://drive.google.com/xxx\n\nشكرا 🙏`);
+    if(t.includes('خلص')){
+        await msg.reply('رابط الخلاص: s-academy.com/pay');
     }
 });
 
 client.initialize();
-app.get('/', (req,res)=> res.send('BOT ON'));
-app.listen(process.env.PORT || 3000);
